@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from modules.preprocessing import preprocess_data
+from modules.analytics import show_kpis
 st.set_page_config(
     page_title="Customer Purchase Behavior Analytics",
     layout="wide"
@@ -32,5 +33,10 @@ st.write(df.columns.tolist())
 st.divider()
 clean_df = preprocess_data(df)
 st.divider()
-st.subheader("Cleaned Dataset Preview")
-st.dataframe(clean_df.head(10), use_container_width=True)
+show_kpis(clean_df)
+st.divider()
+st.subheader("Cleaned Dataset")
+st.dataframe(
+    clean_df,
+    use_container_width=True
+)

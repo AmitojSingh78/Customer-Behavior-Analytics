@@ -1,24 +1,45 @@
 import streamlit as st
 def show_kpis(df):
-    """
-    Display important business KPIs.
-    """
-    st.header("Business KPIs")
+    st.header("Business KPI Dashboard")
+    total_revenue = df["Revenue"].sum()
+    total_orders = df["InvoiceNo"].nunique()
     total_customers = df["CustomerID"].nunique()
-    total_sales = df["Amount"].sum()
-    average_purchase = df["Amount"].mean()
-    highest_purchase = df["Amount"].max()
-    lowest_purchase = df["Amount"].min()
-    total_categories = df["Category"].nunique()
-    total_cities = df["City"].nunique()
-    total_transactions = len(df)
+    total_products_sold = df["Quantity"].sum()
+    average_order_value = total_revenue / total_orders
+    unique_products = df["StockCode"].nunique()
+    countries = df["Country"].nunique()
+    average_unit_price = df["UnitPrice"].mean()
     col1, col2, col3, col4 = st.columns(4)
-    col1.metric("Customers", total_customers)
-    col2.metric("Total Sales", f"₹{total_sales:,.2f}")
-    col3.metric("Avg Purchase", f"₹{average_purchase:,.2f}")
-    col4.metric("Transactions", total_transactions)
+    col1.metric(
+        "Total Revenue",
+        f"£{total_revenue:,.2f}"
+    )
+    col2.metric(
+        "Orders",
+        f"{total_orders:,}"
+    )
+    col3.metric(
+        "Customers",
+        f"{total_customers:,}"
+    )
+    col4.metric(
+        "Products Sold",
+        f"{total_products_sold:,}"
+    )
     col5, col6, col7, col8 = st.columns(4)
-    col5.metric("Highest Purchase", f"₹{highest_purchase:,.2f}")
-    col6.metric("Lowest Purchase", f"₹{lowest_purchase:,.2f}")
-    col7.metric("Categories", total_categories)
-    col8.metric("Cities", total_cities)
+    col5.metric(
+        "Avg Order Value",
+        f"£{average_order_value:,.2f}"
+    )
+    col6.metric(
+        "Unique Products",
+        f"{unique_products:,}"
+    )
+    col7.metric(
+        "Countries",
+        f"{countries}"
+    )
+    col8.metric(
+        "Avg Unit Price",
+        f"£{average_unit_price:.2f}"
+    )
