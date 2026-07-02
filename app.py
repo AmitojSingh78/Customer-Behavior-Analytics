@@ -3,6 +3,7 @@ import pandas as pd
 from modules.preprocessing import preprocess_data
 from modules.analytics import show_kpis
 from modules.visualisation import show_visualizations
+from modules.rfm import show_rfm
 st.set_page_config(
     page_title="Customer Purchase Behavior Analytics",
     layout="wide"
@@ -37,6 +38,8 @@ st.divider()
 show_kpis(clean_df)
 st.divider()
 show_visualizations(clean_df)
+st.divider()
+show_rfm(clean_df)
 st.divider()
 st.subheader("Cleaned Dataset")
 st.dataframe(
