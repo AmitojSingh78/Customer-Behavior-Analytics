@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from modules.preprocessing import preprocess_data
 st.set_page_config(
     page_title="Customer Purchase Behavior Analytics",
     layout="wide"
@@ -29,5 +30,7 @@ st.divider()
 st.subheader("Dataset Columns")
 st.write(df.columns.tolist())
 st.divider()
-st.subheader("Dataset Preview")
-st.dataframe(df.head(10), use_container_width=True)
+clean_df = preprocess_data(df)
+st.divider()
+st.subheader("Cleaned Dataset Preview")
+st.dataframe(clean_df.head(10), use_container_width=True)
