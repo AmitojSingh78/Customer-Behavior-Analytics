@@ -1,20 +1,33 @@
 import streamlit as st
-from modules.upload import upload_dataset
-from modules.preprocessing import preprocess_data
-from modules.analytics import show_kpis
+import pandas as pd
 st.set_page_config(
-    page_title="Customer Behavior Analytics",
+    page_title="Customer Purchase Behavior Analytics",
     layout="wide"
 )
-st.title("Customer Behavior Analytics Dashboard")
-st.write("Welcome to the Customer Behavior Analytics Dashboard!")
+st.sidebar.title("Navigation")
+st.sidebar.write("Customer Purchase Behavior Analytics")
+st.title("Customer Purchase Behavior Analytics Dashboard")
+st.markdown("""
+Analyze customer purchasing behavior using the Online Retail dataset.
+""")
 st.divider()
-df = upload_dataset()
-if df is not None:
-    cleaned_df = preprocess_data(df)
-    show_kpis(cleaned_df)
-    st.divider()
-    st.subheader("Cleaned Dataset")
-    st.dataframe(cleaned_df)
-else:
-    st.warning("Please upload a dataset.")
+try:
+    df = pd.read_csv(
+        "data/OnlineRetail.csv",
+        encoding="ISO-8859-1"
+    )
+    st.success("Dataset Loaded Successfully!")
+except Exception as e:
+    st.error(f"Error loading dataset: {e}")
+    st.stop()
+st.subheader("Dataset Overview")
+col1, col2, col3 = st.columns(3)
+col1.metric("Rows", df.shape[0])
+col2.metric("Columns", df.shape[1])
+col3.metric("Missing Values", df.isnull().sum().sum())
+st.divider()
+st.subheader("Dataset Columns")
+st.write(df.columns.tolist())
+st.divider()
+st.subheader("Dataset Preview")
+st.dataframe(df.head(10), use_container_width=True)
