@@ -4,6 +4,7 @@ from modules.preprocessing import preprocess_data
 from modules.analytics import show_kpis
 from modules.visualisation import show_visualizations
 from modules.rfm import show_rfm
+from modules.filters import apply_filters
 st.set_page_config(
     page_title="Customer Purchase Behavior Analytics",
     layout="wide"
@@ -34,6 +35,10 @@ st.subheader("Dataset Columns")
 st.write(df.columns.tolist())
 st.divider()
 clean_df = preprocess_data(df)
+clean_df = apply_filters(clean_df)
+st.info(
+    f"Showing {len(clean_df):,} records after applying filters."
+)
 st.divider()
 show_kpis(clean_df)
 st.divider()
