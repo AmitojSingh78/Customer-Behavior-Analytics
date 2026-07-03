@@ -5,6 +5,7 @@ from modules.analytics import show_kpis
 from modules.visualisation import show_visualizations
 from modules.rfm import show_rfm
 from modules.filters import apply_filters
+from modules.reports import generate_report
 def load_css():
     with open("assets/style.css") as f:
         st.markdown(
@@ -18,19 +19,12 @@ st.set_page_config(
 load_css()
 page = st.sidebar.radio(
     "Navigation",
-
     [
-
         "Dashboard",
-
         "Visualizations",
-
         "Customer Segmentation",
-
         "Reports",
-
         "About"
-
     ]
 )
 st.title("Customer Purchase Behavior Analytics Dashboard")
@@ -68,7 +62,17 @@ elif page=="Visualizations":
 elif page=="Customer Segmentation":
     show_rfm(clean_df)
 elif page=="Reports":
-    st.info("Coming in Step 9")
+    st.title("Generate Business Report")
+    if st.button("Generate PDF Report"):
+        report_path = generate_report(clean_df)
+        with open(report_path, "rb") as pdf:
+            st.download_button(
+                label="⬇ Download PDF Report",
+                data=pdf,
+                file_name="Customer_Analytics_Report.pdf",
+                mime="application/pdf"
+        )
+        st.success("PDF Report Generated Successfully!")
 elif page=="About":
     st.title("About Project")
     st.write("""
@@ -90,7 +94,7 @@ st.dataframe(
 )
 csv = clean_df.to_csv(index=False).encode()
 st.download_button(
-    "⬇ Download Clean Dataset",
+    "Download Clean Dataset",
     csv,
     "CleanDataset.csv",
     "text/csv"
