@@ -6,6 +6,8 @@ from modules.visualisation import show_visualizations
 from modules.rfm import show_rfm
 from modules.filters import apply_filters
 from modules.reports import generate_report
+from database.database import create_database
+from database.database import run_query
 def load_css():
     with open("assets/style.css") as f:
         st.markdown(
@@ -23,6 +25,7 @@ page = st.sidebar.radio(
         "Dashboard",
         "Visualizations",
         "Customer Segmentation",
+        "SQL Dashboard",
         "Reports",
         "About"
     ]
@@ -51,6 +54,7 @@ st.subheader("Dataset Columns")
 st.write(df.columns.tolist())
 st.divider()
 clean_df = preprocess_data(df)
+create_database(clean_df)
 clean_df = apply_filters(clean_df)
 st.info(
     f"Showing {len(clean_df):,} records after applying filters."
@@ -61,6 +65,15 @@ elif page=="Visualizations":
     show_visualizations(clean_df)
 elif page=="Customer Segmentation":
     show_rfm(clean_df)
+elif page == "SQL Dashboard":
+    st.title("🗄 SQL Analytics Dashboard")
+    query = st.text_area(
+        "Write SQL Query",
+        "SELECT * FROM transactions LIMIT 10"
+    )
+    if st.button("Run Query"):
+        result = run_query(query)
+        st.dataframe(result, use_container_width=True)
 elif page=="Reports":
     st.title("Generate Business Report")
     if st.button("Generate PDF Report"):
