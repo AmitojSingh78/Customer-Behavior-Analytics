@@ -1,0 +1,19 @@
+.main{
+    background-color:#F8FAFC;
+}
+[data-testid="metric-container"]{
+    background:white;
+    border-radius:12px;
+    padding:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+section[data-testid="stSidebar"]{
+    background:#1E293B;
+}
+section[data-testid="stSidebar"] *{
+    color:white;
+}
+.stButton>button{
+    border-radius:10px;
+    width:100%;
+}

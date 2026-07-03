@@ -5,12 +5,34 @@ from modules.analytics import show_kpis
 from modules.visualisation import show_visualizations
 from modules.rfm import show_rfm
 from modules.filters import apply_filters
+def load_css():
+    with open("assets/style.css") as f:
+        st.markdown(
+            f"<style>{f.read()}</style>",
+            unsafe_allow_html=True
+        )
 st.set_page_config(
     page_title="Customer Purchase Behavior Analytics",
     layout="wide"
 )
-st.sidebar.title("Navigation")
-st.sidebar.write("Customer Purchase Behavior Analytics")
+load_css()
+page = st.sidebar.radio(
+    "Navigation",
+
+    [
+
+        "Dashboard",
+
+        "Visualizations",
+
+        "Customer Segmentation",
+
+        "Reports",
+
+        "About"
+
+    ]
+)
 st.title("Customer Purchase Behavior Analytics Dashboard")
 st.markdown("""
 Analyze customer purchasing behavior using the Online Retail dataset.
@@ -39,15 +61,37 @@ clean_df = apply_filters(clean_df)
 st.info(
     f"Showing {len(clean_df):,} records after applying filters."
 )
-st.divider()
-show_kpis(clean_df)
-st.divider()
-show_visualizations(clean_df)
-st.divider()
-show_rfm(clean_df)
+if page=="Dashboard":
+    show_kpis(clean_df)
+elif page=="Visualizations":
+    show_visualizations(clean_df)
+elif page=="Customer Segmentation":
+    show_rfm(clean_df)
+elif page=="Reports":
+    st.info("Coming in Step 9")
+elif page=="About":
+    st.title("About Project")
+    st.write("""
+Customer Purchase Behavior Analytics Dashboard
+Built using
+- Python
+- Streamlit
+- Pandas
+- Plotly
+- Scikit-Learn
+Dataset
+Online Retail Dataset
+    """)
 st.divider()
 st.subheader("Cleaned Dataset")
 st.dataframe(
     clean_df,
     use_container_width=True
+)
+csv = clean_df.to_csv(index=False).encode()
+st.download_button(
+    "⬇ Download Clean Dataset",
+    csv,
+    "CleanDataset.csv",
+    "text/csv"
 )

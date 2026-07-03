@@ -1,6 +1,6 @@
 import streamlit as st
 def apply_filters(df):
-    st.sidebar.header("🔍 Filters")
+    st.sidebar.header("Filters")
     countries = sorted(df["Country"].unique())
     selected_country = st.sidebar.multiselect(
         "Select Country",
