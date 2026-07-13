@@ -75,31 +75,28 @@ The project demonstrates the complete data analytics workflow, including data pr
 
 ```
 CustomerPurchaseAnalytics/
+|-- app.py
 │
-├── app.py
+|--assets/
+│   |-- style.css
 │
-├── assets/
-│   └── style.css
+|-- data/
+│   |-- OnlineRetail.csv
 │
-├── data/
-│   └── OnlineRetail.csv
+|-- database/
+│   |-- database.py
 │
-├── database/
-│   └── database.py
+|--modules/
+│   |-- preprocessing.py
+│   |-- analytics.py
+│   |-- visualisation.py
+│   |-- filters.py
+│   |-- rfm.py
+│   |-- reports.py
 │
-├── modules/
-│   ├── preprocessing.py
-│   ├── analytics.py
-│   ├── visualisation.py
-│   ├── filters.py
-│   ├── rfm.py
-│   └── reports.py
+|--requirements.txt
 │
-├── reports/
-│
-├── requirements.txt
-│
-└── README.md
+|-- README.md
 ```
 
 ---
