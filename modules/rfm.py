@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.cluster import KMeans
 import plotly.express as px
 def show_rfm(df):
-    st.header("👥 Customer Segmentation (RFM Analysis)")
+    st.header("Customer Segmentation (RFM Analysis)")
     reference_date = df["InvoiceDate"].max() + pd.Timedelta(days=1)
     rfm = (
         df.groupby("CustomerID")
